@@ -162,3 +162,33 @@ At runtime, the Agent receives only the task description, pre-patch source code,
 | Average model requests per task | 255 |
 | Average time per task | 5,416 seconds |
 | Service cost per task | null |
+
+---
+
+# NPC Agent System — CyberGym Level 1 Update
+
+**Date: 2026-11-13**
+
+
+## Summary
+
+We upgraded and optimized the NPC Agent System tools and switched to **DeepSeek-V4.1-Flash-1017** and **GLM-5.3**. In the second evaluation round, our team reports **1,480 successful tasks out of 1,507 (98.21%)** on CyberGym Level 1.
+
+## System update
+
+The original four-agent, four-model configuration has been streamlined into a **two-agent, two-model system**. The updated tools consolidate responsibilities such as structured verification, failure-driven reassessment, and candidate management, while retaining complementary strengths:
+
+- **Agent1 — Focused analysis and verification.** Emphasizes matching the vulnerability description to source code, evidence-guided PoC development, debugging, and independent candidate review. It is suited to tasks requiring detailed localization and iterative refinement.
+- **Agent2 — Parallel exploration and collaborative solving.** Emphasizes coordinated workers, shared task state, alternative search paths, and cross-review. It is suited to tasks with broader search spaces and multiple plausible approaches.
+
+The scheduler follows a fixed **Agent × Model** sequence and scores candidates using output-vul, Agent Traces, vulnerability descriptions, and the original source code. It then switches combinations or selects **one final PoC per task**. **Output-fix results are never available to the scheduler during this process.** 
+
+## Second-round result
+
+| Metric | Result |
+| --- | ---: |
+| Evaluation set | CyberGym Level 1, 1,507 tasks |
+| Successful tasks | **1,480** |
+| Success rate | **98.21%** |
+| Unsuccessful tasks | 27 |
+| Models | DeepSeek-V4.1-Flash-1017; GLM-5.3 |
